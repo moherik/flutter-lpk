@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "97158238819",
+    "firebase_url": "https://lokasi-pelayana-kesehatan.firebaseio.com",
+    "project_id": "lokasi-pelayana-kesehatan",
+    "storage_bucket": "lokasi-pelayana-kesehatan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97158238819:android:cd2f5d67dd56f4866ede56",
+        "android_client_info": {
+          "package_name": "com.emas.lpk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "97158238819-o208eu3oce57n8hs90rbsg0ut4v5mtq3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg1LTO6Eiuw2CG0dzFQx0_7NHFKdQzZGk"
+        },
+        {
+          "current_key": "AIzaSyAtV-sXkFqaeDTaz-DKuISomV0wwlttjc8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "97158238819-o208eu3oce57n8hs90rbsg0ut4v5mtq3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97158238819:android:eacb39fca7d4db806ede56",
+        "android_client_info": {
+          "package_name": "com.example.tpk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "97158238819-m770vbh8qh4e7vvra99udf7q5b8svn5j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tpk",
+            "certificate_hash": "c336b429f369d1cb10de4c669e114a9e539f53a6"
+          }
+        },
+        {
+          "client_id": "97158238819-o208eu3oce57n8hs90rbsg0ut4v5mtq3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg1LTO6Eiuw2CG0dzFQx0_7NHFKdQzZGk"
+        },
+        {
+          "current_key": "AIzaSyAtV-sXkFqaeDTaz-DKuISomV0wwlttjc8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "97158238819-o208eu3oce57n8hs90rbsg0ut4v5mtq3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
