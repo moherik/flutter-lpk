@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lpk/screen/about_screen.dart';
+import 'package:lpk/screen/add_location.dart';
 import 'package:lpk/screen/faq_screen.dart';
 import 'package:lpk/screen/location_screen.dart';
+import 'package:lpk/screen/login_screen.dart';
+import 'package:lpk/sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -10,6 +14,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);
     final double widthScreen = mediaQueryData.size.width;
@@ -22,6 +28,36 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       centerTitle: true,
       backgroundColor: Colors.deepPurple,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.exit_to_app_outlined),
+          tooltip: "Keluar aplikasi?",
+          onPressed: () {
+            return showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                      title: Text("Keluar Aplikasi?"),
+                      content:
+                          Text("Apakah anda ingin keluar dari aplikasi ini?"),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text("YA"),
+                          onPressed: () {
+                            SystemNavigator.pop();
+                          },
+                        ),
+                        FlatButton(
+                          child: Text("TIDAK"),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        )
+                      ]);
+                });
+          },
+        )
+      ],
     );
 
     return Scaffold(
@@ -46,9 +82,26 @@ class _HomeScreenState extends State<HomeScreen> {
                           builder: (context) => LocationScreen()));
                 }),
             _gridItem(
-                color: Colors.red,
+                color: Colors.orange,
                 borderRadius:
                     BorderRadius.only(bottomLeft: Radius.circular(radius)),
+                icon: Icons.add_location_alt_outlined,
+                label: "Tambah Lokasi",
+                onTap: () async {
+                  _prefs.then((SharedPreferences prefs) {
+                    if (prefs.getString("token") != null) {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => AddLocationScreen()));
+                    } else {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => LoginScreen()));
+                    }
+                  });
+                }),
+            _gridItem(
+                color: Colors.red,
+                borderRadius:
+                    BorderRadius.only(topRight: Radius.circular(radius)),
                 icon: Icons.help_outline,
                 label: "F A Q",
                 onTap: () {
@@ -58,42 +111,12 @@ class _HomeScreenState extends State<HomeScreen> {
             _gridItem(
                 color: Colors.indigo,
                 borderRadius:
-                    BorderRadius.only(topRight: Radius.circular(radius)),
+                    BorderRadius.only(topLeft: Radius.circular(radius)),
                 icon: Icons.info_outline,
                 label: "Tentang Aplikasi",
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => AboutScreen()));
-                }),
-            _gridItem(
-                color: Colors.orange,
-                borderRadius:
-                    BorderRadius.only(topLeft: Radius.circular(radius)),
-                icon: Icons.exit_to_app_outlined,
-                label: "Keluar",
-                onTap: () {
-                  return showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                            title: Text("Keluar Aplikasi?"),
-                            content: Text(
-                                "Apakah anda ingin keluar dari aplikasi ini?"),
-                            actions: <Widget>[
-                              FlatButton(
-                                child: Text("YA"),
-                                onPressed: () {
-                                  SystemNavigator.pop();
-                                },
-                              ),
-                              FlatButton(
-                                child: Text("TIDAK"),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              )
-                            ]);
-                      });
                 }),
           ],
         ),

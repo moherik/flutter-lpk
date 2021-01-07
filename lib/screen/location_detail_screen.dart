@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:location/location.dart' as LocationManager;
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
 
 const _apiKey = "AIzaSyAM3iXSkcBdDnQlxunGkEditNA0p0B2Xpg";
@@ -72,14 +73,32 @@ class _LocationDetailScreenState extends State<LocationDetailScreen> {
         Positioned(
           bottom: 30,
           left: 10,
-          child: ElevatedButton.icon(
-              onPressed: () {
-                setState(() {
-                  this.isNavigate = false;
-                });
-              },
-              icon: Icon(Icons.info_outline),
-              label: Text("Detail Lokasi")),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              ElevatedButton.icon(
+                  onPressed: () {
+                    setState(() {
+                      this.isNavigate = false;
+                    });
+                  },
+                  icon: Icon(Icons.info_outline),
+                  label: Text("Detail Lokasi")),
+              SizedBox(width: 10.0),
+              ElevatedButton.icon(
+                  onPressed: () async {
+                    String googleUrl =
+                        'https://www.google.com/maps/search/?api=1&query=${destinationLatLng.latitude},${destinationLatLng.longitude}';
+                    if (await canLaunch(googleUrl)) {
+                      await launch(googleUrl);
+                    } else {
+                      throw 'Could not open the map.';
+                    }
+                  },
+                  icon: Icon(Icons.map_outlined),
+                  label: Text("Buka di Maps")),
+            ],
+          ),
         )
       ]);
     } else {

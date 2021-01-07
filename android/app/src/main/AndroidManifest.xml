@@ -13,7 +13,7 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="lpk"
+        android:label="Aplikasi Lokasi Pelayanan Kesehatan"
         android:icon="@mipmap/ic_launcher">
 
         <meta-data

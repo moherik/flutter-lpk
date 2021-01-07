@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lpk/screen/home_screen.dart';
+import 'package:lpk/screen/add_location.dart';
 import 'package:lpk/sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -8,7 +8,18 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool isLoading = false;
+
   Widget build(BuildContext context) {
+    Widget child;
+    if (isLoading) {
+      child = Center(
+        child: CircularProgressIndicator(),
+      );
+    } else {
+      child = _signInButton();
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Login"),
@@ -21,16 +32,22 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              // FlutterLogo(size: 150,),
+              Image.asset(
+                "assets/logo.png",
+                width: 150.0,
+              ),
+              SizedBox(
+                height: 30,
+              ),
               Text(
                 "Aplikasi Lokasi Pelayanan Kesehatan",
-                style: _textStyle(),
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
               SizedBox(
-                height: 50,
+                height: 30,
               ),
-              _signInButton()
+              child
             ],
           ),
         ),
@@ -41,11 +58,20 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _signInButton() {
     return OutlineButton(
       splashColor: Colors.grey,
-      onPressed: () async {
-        signInWithGoogle().then((result) =>
-        {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => HomeScreen()))
+      onPressed: () {
+        setState(() {
+          isLoading = true;
+        });
+
+        signInWithGoogle().then((result) {
+          if (result != null) {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => AddLocationScreen()));
+          }
+
+          setState(() {
+            isLoading = false;
+          });
         });
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),

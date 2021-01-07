@@ -15,16 +15,24 @@
       },
       "oauth_client": [
         {
+          "client_id": "97158238819-pcee85n1qrv5ukbee4mq45nb0h9qt478.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.emas.lpk",
+            "certificate_hash": "c336b429f369d1cb10de4c669e114a9e539f53a6"
+          }
+        },
+        {
           "client_id": "97158238819-o208eu3oce57n8hs90rbsg0ut4v5mtq3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDg1LTO6Eiuw2CG0dzFQx0_7NHFKdQzZGk"
+          "current_key": "AIzaSyAtV-sXkFqaeDTaz-DKuISomV0wwlttjc8"
         },
         {
-          "current_key": "AIzaSyAtV-sXkFqaeDTaz-DKuISomV0wwlttjc8"
+          "current_key": "AIzaSyCLF2_NgaRhOpBF2S_vcumsMAG44UezuZI"
         }
       ],
       "services": {
@@ -61,10 +69,10 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDg1LTO6Eiuw2CG0dzFQx0_7NHFKdQzZGk"
+          "current_key": "AIzaSyAtV-sXkFqaeDTaz-DKuISomV0wwlttjc8"
         },
         {
-          "current_key": "AIzaSyAtV-sXkFqaeDTaz-DKuISomV0wwlttjc8"
+          "current_key": "AIzaSyCLF2_NgaRhOpBF2S_vcumsMAG44UezuZI"
         }
       ],
       "services": {

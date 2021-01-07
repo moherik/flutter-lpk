@@ -6,18 +6,17 @@ class LocationModel {
   final String description;
   final String phone;
   final String website;
-  final String locationType;
+  final int locationType;
 
-  LocationModel({
-    this.id,
-    this.title,
-    this.address,
-    this.latLong,
-    this.description,
-    this.phone,
-    this.website,
-    this.locationType
-  });
+  LocationModel(
+      {this.id,
+      this.title,
+      this.address,
+      this.latLong,
+      this.description,
+      this.phone,
+      this.website,
+      this.locationType});
 
   factory LocationModel.fromJson(Map<String, dynamic> json) {
     return LocationModel(
@@ -28,7 +27,16 @@ class LocationModel {
         description: json['description'],
         phone: json['phone'],
         website: json['website'],
-        locationType: json['location_type']
-    );
+        locationType: json['location_type']);
   }
+
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'address': address,
+        'lat_long': latLong,
+        'phone': phone,
+        'website': website,
+        'description': description,
+        'location_type_id': locationType
+      };
 }

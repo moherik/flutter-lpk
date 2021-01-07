@@ -21,86 +21,202 @@ class _FAQScreenState extends State<FAQScreen> {
         child: ListView(
           physics: const BouncingScrollPhysics(),
           children: <Widget>[
-            cardContent(Colors.indigo, "Cara Penggunaan Aplikasi",
-                "Bagaimana cara menggunakan aplikas Lokasi Pelayanan Kesehatan ini?"),
-            cardContent(Colors.amber, "Cara Menambah Lokasi",
-                "Cara menambahkan lokasi kesehatan anda"),
+            ExpandableNotifier(
+                child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Card(
+                clipBehavior: Clip.antiAlias,
+                child: Column(
+                  children: <Widget>[
+                    ScrollOnExpand(
+                      scrollOnExpand: true,
+                      scrollOnCollapse: false,
+                      child: ExpandablePanel(
+                        theme: const ExpandableThemeData(
+                          headerAlignment:
+                              ExpandablePanelHeaderAlignment.center,
+                          tapBodyToCollapse: true,
+                        ),
+                        header: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                              "Cara Penggunaan Aplikasi",
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            )),
+                        collapsed: Text(
+                          "Bagaimana cara Menggunakan aplikasi Lokasi Pelayanan Kesehatan ini?",
+                          softWrap: true,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        expanded: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                                padding: EdgeInsets.only(bottom: 10),
+                                child: Text(
+                                  "Bagaimana cara Menggunakan aplikasi Lokasi Pelayanan Kesehatan ini?",
+                                  softWrap: true,
+                                  overflow: TextOverflow.fade,
+                                )),
+                            Padding(
+                                padding: EdgeInsets.only(bottom: 10),
+                                child: Text(
+                                  "1. Buka Menu Temukan Lokasi",
+                                  softWrap: true,
+                                  overflow: TextOverflow.fade,
+                                )),
+                            Padding(
+                                padding: EdgeInsets.only(bottom: 10),
+                                child: Text(
+                                  "2. Ijinkan Aplikasi mengakses GPS anda",
+                                  softWrap: true,
+                                  overflow: TextOverflow.fade,
+                                )),
+                            Padding(
+                                padding: EdgeInsets.only(bottom: 10),
+                                child: Text(
+                                  "3. Pilihlah Tipe Lokasi Rumah Sakit atau Apotek",
+                                  softWrap: true,
+                                  overflow: TextOverflow.fade,
+                                )),
+                            Padding(
+                                padding: EdgeInsets.only(bottom: 10),
+                                child: Text(
+                                  "4. Akan Muncul Daftar lokasi yang anda sudah pilih",
+                                  softWrap: true,
+                                  overflow: TextOverflow.fade,
+                                )),
+                            Padding(
+                                padding: EdgeInsets.only(bottom: 10),
+                                child: Text(
+                                  "5. Pilih Lokasi tersebut untuk melihat detail lokasi",
+                                  softWrap: true,
+                                  overflow: TextOverflow.fade,
+                                )),
+                            Padding(
+                                padding: EdgeInsets.only(bottom: 10),
+                                child: Text(
+                                  "6. Klik Petunjuk Arah untuk melihat rute dari GPS user ke lokasi tujuan",
+                                  softWrap: true,
+                                  overflow: TextOverflow.fade,
+                                )),
+                            Padding(
+                                padding: EdgeInsets.only(bottom: 10),
+                                child: Text(
+                                  "7. Klik tombol Tracking Lokasi untuk meneruskan live tracking ke lokasi tujuan di Google Maps",
+                                  softWrap: true,
+                                  overflow: TextOverflow.fade,
+                                )),
+                          ],
+                        ),
+                        builder: (_, collapsed, expanded) {
+                          return Padding(
+                            padding: EdgeInsets.only(
+                                left: 10, right: 10, bottom: 10),
+                            child: Expandable(
+                              collapsed: collapsed,
+                              expanded: expanded,
+                              theme:
+                                  const ExpandableThemeData(crossFadePoint: 0),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )),
+            ExpandableNotifier(
+                child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Card(
+                clipBehavior: Clip.antiAlias,
+                child: Column(
+                  children: <Widget>[
+                    ScrollOnExpand(
+                      scrollOnExpand: true,
+                      scrollOnCollapse: false,
+                      child: ExpandablePanel(
+                        theme: const ExpandableThemeData(
+                          headerAlignment:
+                              ExpandablePanelHeaderAlignment.center,
+                          tapBodyToCollapse: true,
+                        ),
+                        header: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                              "Cara Menambah Lokasi",
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            )),
+                        collapsed: Text(
+                          "Bagaimana cara menambahkan lokasi tempat saya?",
+                          softWrap: true,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        expanded: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                                padding: EdgeInsets.only(bottom: 10),
+                                child: Text(
+                                  "Bagaimana cara menambahkan lokasi tempat saya?",
+                                  softWrap: true,
+                                  overflow: TextOverflow.fade,
+                                )),
+                            Padding(
+                                padding: EdgeInsets.only(bottom: 10),
+                                child: Text(
+                                  "1. Klik menu Tambah Lokasi",
+                                  softWrap: true,
+                                  overflow: TextOverflow.fade,
+                                )),
+                            Padding(
+                                padding: EdgeInsets.only(bottom: 10),
+                                child: Text(
+                                  "2. Jika anda belum melakukan login, anda harus login terlebih dahulu",
+                                  softWrap: true,
+                                  overflow: TextOverflow.fade,
+                                )),
+                            Padding(
+                                padding: EdgeInsets.only(bottom: 10),
+                                child: Text(
+                                  "3. Masukkan keterangan lokasi anda",
+                                  softWrap: true,
+                                  overflow: TextOverflow.fade,
+                                )),
+                            Padding(
+                                padding: EdgeInsets.only(bottom: 10),
+                                child: Text(
+                                  "4. Tekan tombol tambah lokasi",
+                                  softWrap: true,
+                                  overflow: TextOverflow.fade,
+                                )),
+                          ],
+                        ),
+                        builder: (_, collapsed, expanded) {
+                          return Padding(
+                            padding: EdgeInsets.only(
+                                left: 10, right: 10, bottom: 10),
+                            child: Expandable(
+                              collapsed: collapsed,
+                              expanded: expanded,
+                              theme:
+                                  const ExpandableThemeData(crossFadePoint: 0),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ))
           ],
         ),
       ),
     );
-  }
-
-  Widget cardContent(Color color, String title, String subtitle) {
-    return ExpandableNotifier(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Card(
-            clipBehavior: Clip.antiAlias,
-            child: Column(
-              children: <Widget>[
-                ScrollOnExpand(
-                  scrollOnExpand: true,
-                  scrollOnCollapse: false,
-                  child: ExpandablePanel(
-                    theme: const ExpandableThemeData(
-                      headerAlignment: ExpandablePanelHeaderAlignment.center,
-                      tapBodyToCollapse: true,
-                    ),
-                    header: Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Text(
-                          title,
-                          style: TextStyle(fontWeight: FontWeight.w600),
-                        )),
-                    collapsed: Text(
-                      subtitle,
-                      softWrap: true,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    expanded: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                            padding: EdgeInsets.only(bottom: 10),
-                            child: Text(
-                              subtitle,
-                              softWrap: true,
-                              overflow: TextOverflow.fade,
-                            )),
-                        Padding(
-                            padding: EdgeInsets.only(bottom: 10),
-                            child: Text(
-                              "1. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-                              softWrap: true,
-                              overflow: TextOverflow.fade,
-                            )),
-                        Padding(
-                            padding: EdgeInsets.only(bottom: 10),
-                            child: Text(
-                              "2. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-                              softWrap: true,
-                              overflow: TextOverflow.fade,
-                            )),
-                      ],
-                    ),
-                    builder: (_, collapsed, expanded) {
-                      return Padding(
-                        padding: EdgeInsets.only(
-                            left: 10, right: 10, bottom: 10),
-                        child: Expandable(
-                          collapsed: collapsed,
-                          expanded: expanded,
-                          theme: const ExpandableThemeData(crossFadePoint: 0),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ));
   }
 }
