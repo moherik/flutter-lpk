@@ -37,7 +37,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Tambah Lokasi"),
-          backgroundColor: Colors.amber,
+          backgroundColor: Colors.orange,
           actions: [
             IconButton(
               icon: Icon(Icons.logout),
@@ -92,7 +92,6 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                       zoomGesturesEnabled: false,
                       zoomControlsEnabled: false,
                       onMapCreated: _onMapCreated,
-                      myLocationEnabled: true,
                       initialCameraPosition:
                           CameraPosition(target: currentLatLng, zoom: 15.0),
                       markers: _markers,
@@ -126,6 +125,14 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                                   value: 1, child: Text("Apotek")),
                               DropdownMenuItem<int>(
                                   value: 2, child: Text("Rumah Sakit")),
+                              DropdownMenuItem<int>(
+                                  value: 3, child: Text("Puskesmas")),
+                              DropdownMenuItem<int>(
+                                  value: 4, child: Text("Klinik")),
+                              DropdownMenuItem<int>(
+                                  value: 5, child: Text("Praktek Dokter")),
+                              DropdownMenuItem<int>(
+                                  value: 6, child: Text("Praktek Bidan")),
                             ],
                             onChanged: (value) async {
                               setState(() {

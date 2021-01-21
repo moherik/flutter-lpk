@@ -23,6 +23,9 @@ class _LocationScreenState extends State<LocationScreen> {
   bool isLoading = false;
   String errorMessage;
   String type;
+  String keyword;
+
+  TextEditingController keywordSearch = TextEditingController();
 
   @override
   void initState() {
@@ -40,21 +43,11 @@ class _LocationScreenState extends State<LocationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String typeLabel;
-    IconData typeIcon;
-
-    if (type == "hospital") {
-      typeLabel = "Rumah Sakit";
-      typeIcon = Icons.local_hospital_outlined;
-    } else if (type == "pharmacy") {
-      typeLabel = "Apotek";
-      typeIcon = Icons.medical_services_outlined;
-    } else {
-      typeLabel = "Pilih Tipe Lokasi!";
-      typeIcon = Icons.info_outline;
-    }
+    String typeLabel = "Pilih Tipe Lokasi!";
+    IconData typeIcon = Icons.info_outline;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
           title: Text("Peta Pelayanan Kesehatan"),
           backgroundColor: Colors.teal,
@@ -86,6 +79,54 @@ class _LocationScreenState extends State<LocationScreen> {
               ),
             ),
           ),
+          () {
+            if (type == null) {
+              return Container();
+            } else {
+              return Positioned(
+                left: 10,
+                top: 10,
+                child: Container(
+                  width: MediaQuery.of(context).size.width - 20,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 1,
+                        blurRadius: 4,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 15),
+                    child: TextField(
+                      controller: keywordSearch,
+                      onChanged: (val) async {
+                        setState(() {
+                          this.keyword = val;
+                        });
+                        await refresh();
+                      },
+                      decoration: InputDecoration(
+                          hintText: "Cari lokasi",
+                          suffix: InkWell(
+                            child: Icon(Icons.close),
+                            onTap: () async {
+                              setState(() {
+                                this.keyword = "";
+                                keywordSearch.clear();
+                              });
+                              await refresh();
+                            },
+                          )),
+                    ),
+                  ),
+                ),
+              );
+            }
+          }(),
           Positioned(
             left: 10,
             bottom: 180,
@@ -108,7 +149,35 @@ class _LocationScreenState extends State<LocationScreen> {
                               label: "Apotek",
                               type: "pharmacy",
                               autoClose: true,
-                            )
+                            ),
+                            _placeCategoryItem(
+                              icon: Icons.local_hospital_outlined,
+                              label: "Puskesmas",
+                              type: "hospital",
+                              keyword: "puskesmas",
+                              autoClose: true,
+                            ),
+                            _placeCategoryItem(
+                              icon: Icons.local_hospital_outlined,
+                              label: "Klinik",
+                              type: "hospital",
+                              keyword: "klinik",
+                              autoClose: true,
+                            ),
+                            _placeCategoryItem(
+                              icon: Icons.local_hospital_outlined,
+                              label: "Prakter Dokter",
+                              type: "hospital",
+                              keyword: "praktek dokter",
+                              autoClose: true,
+                            ),
+                            _placeCategoryItem(
+                              icon: Icons.local_hospital_outlined,
+                              label: "Praktek Bidan",
+                              type: "hospital",
+                              keyword: "praktek bidan",
+                              autoClose: true,
+                            ),
                           ],
                         ),
                       );
@@ -137,7 +206,7 @@ class _LocationScreenState extends State<LocationScreen> {
                           child: CircularProgressIndicator(),
                         );
                       } else if (type == null) {
-                        return Wrap(children: <Widget>[
+                        return ListView(children: <Widget>[
                           _placeCategoryItem(
                             icon: Icons.local_hospital_outlined,
                             label: "Rumah Sakit",
@@ -147,7 +216,31 @@ class _LocationScreenState extends State<LocationScreen> {
                             icon: Icons.medical_services_outlined,
                             label: "Apotek",
                             type: "pharmacy",
-                          )
+                          ),
+                          _placeCategoryItem(
+                            icon: Icons.local_hospital_outlined,
+                            label: "Puskesmas",
+                            type: "hospital",
+                            keyword: "puskesmas",
+                          ),
+                          _placeCategoryItem(
+                            icon: Icons.local_hospital_outlined,
+                            label: "Klinik",
+                            type: "hospital",
+                            keyword: "klinik",
+                          ),
+                          _placeCategoryItem(
+                            icon: Icons.local_hospital_outlined,
+                            label: "Prakter Dokter",
+                            type: "hospital",
+                            keyword: "praktek dokter",
+                          ),
+                          _placeCategoryItem(
+                            icon: Icons.local_hospital_outlined,
+                            label: "Praktek Bidan",
+                            type: "hospital",
+                            keyword: "praktek bidan",
+                          ),
                         ]);
                       } else if (errorMessage != null) {
                         return Text(errorMessage);
@@ -190,13 +283,14 @@ class _LocationScreenState extends State<LocationScreen> {
 
   void getNearbyPlaces(LatLng center) async {
     setState(() {
+      this.places = [];
       this.isLoading = true;
       this.errorMessage = null;
     });
 
     final location = Location(center.latitude, center.longitude);
-    final result =
-        await _places.searchNearbyWithRadius(location, 5000, type: type);
+    final result = await _places.searchNearbyWithRadius(location, 5000,
+        type: type, keyword: keyword);
 
     setState(() {
       this.isLoading = false;
@@ -217,16 +311,21 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   InkWell _placeCategoryItem(
-      {String label, IconData icon, String type, bool autoClose: false}) {
+      {String label,
+      IconData icon,
+      String type,
+      String keyword: '',
+      bool autoClose: false}) {
     return InkWell(
       onTap: () {
         setState(() {
           this.type = type;
+          this.keyword = keyword;
         });
-        refresh();
         if (autoClose) {
           Navigator.pop(context);
         }
+        refresh();
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -257,6 +356,8 @@ class _LocationScreenState extends State<LocationScreen> {
       if (f.types.first == "hospital") {
         icon = Icons.local_hospital_outlined;
       } else if (f.types.first == "pharmacy") {
+        icon = Icons.medical_services_outlined;
+      } else {
         icon = Icons.medical_services_outlined;
       }
 

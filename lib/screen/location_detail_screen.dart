@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:lpk/screen/image_detail_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:location/location.dart' as LocationManager;
 import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
 
 const _apiKey = "AIzaSyAM3iXSkcBdDnQlxunGkEditNA0p0B2Xpg";
@@ -193,19 +193,47 @@ class _LocationDetailScreenState extends State<LocationDetailScreen> {
       height: 100,
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        child: Image.network(buildPhotoURL(url), fit: BoxFit.fill,
-            loadingBuilder:
-                (BuildContext context, Widget child, ImageChunkEvent progress) {
-          if (progress == null) return child;
+        child: GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              PageRouteBuilder(
+                transitionDuration: Duration(milliseconds: 1000),
+                pageBuilder: (BuildContext context, Animation<double> animation,
+                    Animation<double> secondaryAnimation) {
+                  return ImageDetailScreen(buildPhotoURL(url));
+                },
+                transitionsBuilder: (BuildContext context,
+                    Animation<double> animation,
+                    Animation<double> secondaryAnimation,
+                    Widget child) {
+                  return Align(
+                    child: FadeTransition(
+                      opacity: animation,
+                      child: child,
+                    ),
+                  );
+                },
+              ),
+            );
+          },
+          child: Hero(
+            tag: 'imageHero${buildPhotoURL(url)}',
+            child: Image.network(buildPhotoURL(url), fit: BoxFit.fill,
+                loadingBuilder: (BuildContext context, Widget child,
+                    ImageChunkEvent progress) {
+              if (progress == null) return child;
 
-          return Center(
-            child: CircularProgressIndicator(
-              value: progress.expectedTotalBytes != null
-                  ? progress.cumulativeBytesLoaded / progress.expectedTotalBytes
-                  : null,
-            ),
-          );
-        }),
+              return Center(
+                child: CircularProgressIndicator(
+                  value: progress.expectedTotalBytes != null
+                      ? progress.cumulativeBytesLoaded /
+                          progress.expectedTotalBytes
+                      : null,
+                ),
+              );
+            }),
+          ),
+        ),
       ),
     );
   }

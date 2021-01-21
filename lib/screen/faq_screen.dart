@@ -104,7 +104,7 @@ class _FAQScreenState extends State<FAQScreen> {
                             Padding(
                                 padding: EdgeInsets.only(bottom: 10),
                                 child: Text(
-                                  "7. Klik tombol Tracking Lokasi untuk meneruskan live tracking ke lokasi tujuan di Google Maps",
+                                  "7. Buka di Maps",
                                   softWrap: true,
                                   overflow: TextOverflow.fade,
                                 )),

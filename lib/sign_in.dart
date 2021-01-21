@@ -66,6 +66,8 @@ Future<bool> signinOrSignUp(
     }),
   );
 
+  print(jsonEncode(response.body));
+
   if (response.statusCode == 200) {
     Map<String, dynamic> body = jsonDecode(response.body);
     prefs.setString("token", body['token']);
