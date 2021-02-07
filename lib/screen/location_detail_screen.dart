@@ -324,6 +324,34 @@ class _LocationDetailScreenState extends State<LocationDetailScreen> {
       );
     }
 
+    if (placeDetail.name.toLowerCase().contains("soegiri") ||
+        placeDetail.name.toLowerCase().contains("petro") ||
+        placeDetail.name.toLowerCase().contains("semen gresik")) {
+      list.add(
+        Padding(
+            padding: EdgeInsets.only(
+                top: 10.0,
+                left: horizontalPadding,
+                right: horizontalPadding,
+                bottom: 4.0),
+            child: Row(
+              children: [
+                Icon(Icons.local_hospital_outlined, color: Colors.red),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  "UGD",
+                  style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                ),
+              ],
+            )),
+      );
+    }
+
     if (placeDetail.openingHours != null) {
       final openingHour = placeDetail.openingHours;
       var text = '';

@@ -13,7 +13,7 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
-  final double zoomLevel = 13;
+  double zoomLevel = 12;
   final locationScaffoldKey = GlobalKey<ScaffoldState>();
 
   Set<Marker> _markers = {};
@@ -24,6 +24,7 @@ class _LocationScreenState extends State<LocationScreen> {
   String errorMessage;
   String type;
   String keyword;
+  int range = 5000;
 
   TextEditingController keywordSearch = TextEditingController();
 
@@ -130,62 +131,121 @@ class _LocationScreenState extends State<LocationScreen> {
           Positioned(
             left: 10,
             bottom: 180,
-            child: RaisedButton.icon(
-              onPressed: () {
-                showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext build) {
-                      return Container(
-                        child: Wrap(
-                          children: <Widget>[
-                            _placeCategoryItem(
-                              icon: Icons.local_hospital_outlined,
-                              label: "Rumah Sakit",
-                              type: "hospital",
-                              autoClose: true,
+            // bottom: 400,
+            child: Row(
+              children: [
+                RaisedButton.icon(
+                  onPressed: () {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext build) {
+                          return Container(
+                            child: Wrap(
+                              children: <Widget>[
+                                _placeCategoryItem(
+                                  icon: Icons.local_hospital_outlined,
+                                  label: "Rumah Sakit",
+                                  type: "hospital",
+                                  autoClose: true,
+                                ),
+                                _placeCategoryItem(
+                                  icon: Icons.medical_services_outlined,
+                                  label: "Apotek",
+                                  type: "pharmacy",
+                                  autoClose: true,
+                                ),
+                                _placeCategoryItem(
+                                  icon: Icons.local_hospital_outlined,
+                                  label: "Puskesmas",
+                                  type: "hospital",
+                                  keyword: "puskesmas",
+                                  autoClose: true,
+                                ),
+                                _placeCategoryItem(
+                                  icon: Icons.local_hospital_outlined,
+                                  label: "Klinik",
+                                  type: "hospital",
+                                  keyword: "klinik",
+                                  autoClose: true,
+                                ),
+                                _placeCategoryItem(
+                                  icon: Icons.local_hospital_outlined,
+                                  label: "Prakter Dokter",
+                                  type: "hospital",
+                                  keyword: "praktek dokter",
+                                  autoClose: true,
+                                ),
+                                _placeCategoryItem(
+                                  icon: Icons.local_hospital_outlined,
+                                  label: "Praktek Bidan",
+                                  type: "hospital",
+                                  keyword: "praktek bidan",
+                                  autoClose: true,
+                                ),
+                              ],
                             ),
-                            _placeCategoryItem(
-                              icon: Icons.medical_services_outlined,
-                              label: "Apotek",
-                              type: "pharmacy",
-                              autoClose: true,
-                            ),
-                            _placeCategoryItem(
-                              icon: Icons.local_hospital_outlined,
-                              label: "Puskesmas",
-                              type: "hospital",
-                              keyword: "puskesmas",
-                              autoClose: true,
-                            ),
-                            _placeCategoryItem(
-                              icon: Icons.local_hospital_outlined,
-                              label: "Klinik",
-                              type: "hospital",
-                              keyword: "klinik",
-                              autoClose: true,
-                            ),
-                            _placeCategoryItem(
-                              icon: Icons.local_hospital_outlined,
-                              label: "Prakter Dokter",
-                              type: "hospital",
-                              keyword: "praktek dokter",
-                              autoClose: true,
-                            ),
-                            _placeCategoryItem(
-                              icon: Icons.local_hospital_outlined,
-                              label: "Praktek Bidan",
-                              type: "hospital",
-                              keyword: "praktek bidan",
-                              autoClose: true,
-                            ),
-                          ],
-                        ),
-                      );
-                    });
-              },
-              icon: Icon(typeIcon),
-              label: Text(typeLabel),
-              color: Colors.white,
+                          );
+                        });
+                  },
+                  icon: Icon(typeIcon),
+                  label: Text(typeLabel),
+                  color: Colors.white,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                () {
+                  if (type == null) {
+                    return Container();
+                  } else {
+                    return RaisedButton.icon(
+                      onPressed: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext build) {
+                              return Container(
+                                child: ListView(
+                                  children: <Widget>[
+                                    _rangeItem(
+                                        label: "5 km",
+                                        range: 5000,
+                                        zoomLevel: 12),
+                                    _rangeItem(
+                                        label: "2.5 km",
+                                        range: 2500,
+                                        zoomLevel: 13),
+                                    _rangeItem(
+                                        label: "1 km",
+                                        range: 1000,
+                                        zoomLevel: 15),
+                                    _rangeItem(
+                                        label: "500 m",
+                                        range: 500,
+                                        zoomLevel: 16),
+                                    _rangeItem(
+                                        label: "250 m",
+                                        range: 250,
+                                        zoomLevel: 16),
+                                    _rangeItem(
+                                        label: "100 m",
+                                        range: 100,
+                                        zoomLevel: 16),
+                                    _rangeItem(
+                                        label: "50 m",
+                                        range: 50,
+                                        zoomLevel: 18),
+                                  ],
+                                ),
+                              );
+                            });
+                      },
+                      icon: Icon(Icons.compass_calibration_outlined),
+                      label: Text("${range.toString()}m"),
+                      color: Colors.white,
+                    );
+                  }
+                }(),
+              ],
             ),
           ),
           DraggableScrollableSheet(
@@ -289,7 +349,7 @@ class _LocationScreenState extends State<LocationScreen> {
     });
 
     final location = Location(center.latitude, center.longitude);
-    final result = await _places.searchNearbyWithRadius(location, 5000,
+    final result = await _places.searchNearbyWithRadius(location, range,
         type: type, keyword: keyword);
 
     setState(() {
@@ -333,6 +393,30 @@ class _LocationScreenState extends State<LocationScreen> {
           children: <Widget>[
             Icon(icon, size: 30.0),
             SizedBox(width: 10),
+            Text(
+              label,
+              style: Theme.of(context).textTheme.bodyText1,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  InkWell _rangeItem({String label, int range, double zoomLevel: 12}) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          this.range = range;
+          this.zoomLevel = zoomLevel;
+        });
+        Navigator.pop(context);
+        refresh();
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+        child: Row(
+          children: <Widget>[
             Text(
               label,
               style: Theme.of(context).textTheme.bodyText1,
